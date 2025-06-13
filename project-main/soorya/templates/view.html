@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Publications</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: url('https://wallpapercave.com/wp/wp2036897.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 120px 20px 40px; /* space below header */
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            animation: fadeIn 1.2s ease-in-out;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h3 {
+            text-align: center;
+            color:rgb(134, 21, 21);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 15px;
+            color: white;
+            background: transparent;
+            animation: fadeIn 1.5s ease;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid rgba(255, 50, 50, 0.7);
+            text-align: left;
+            background: rgba(255, 255, 255, 0.05);
+            transition: background-color 0.3s ease;
+        }
+
+        th {
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 1px 1px 4px black;
+        }
+
+        td a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        td a:hover {
+            color: #00ffff;
+            text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.4s ease-in-out;
+            z-index: 1;
+            position: relative;
+        }
+
+        @media screen and (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 20px;
+                background: rgba(255, 255, 255, 0.05);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+                padding: 10px;
+            }
+
+            td {
+                border: none;
+                padding: 8px 10px;
+                position: relative;
+                text-align: right;
+            }
+
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                top: 8px;
+                font-weight: bold;
+                text-align: left;
+                color: #ffd700;
+            }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        
+  h1, h3, p {
+    transition: text-shadow 0.3s ease;
+  }
+
+  /* Permanent subtle glow */
+  h1, h3, p {
+    text-shadow:
+      0 0 5px #ffd700,
+      0 0 10px #ffd700,
+      0 0 20px #ffb700;
+  }
+
+  /* Stronger glow on hover */
+  h1:hover, h3:hover, p:hover {
+    text-shadow:
+      0 0 10px #00ffff,
+      0 0 20px #00ffff,
+      0 0 30px #00ffff,
+      0 0 40px #00ffff;
+    cursor: pointer;
+  }
+    </style>
+</head>
+<body>
+
+<header>
+    Faculty of Science
+</header>
+
+<div class="container">
+    <h1>📚 Faculty Publication Records</h1>
+    <h3>Available Publications</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Faculty</th>
+                <th>Department</th>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Publisher</th>
+                <th>Year</th>
+                <th>DOI/Link</th>
+                <th>Submitted On</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in records %}
+            <tr>
+                <td data-label="Faculty">{{ row[1] }}</td>
+                <td data-label="Department">{{ row[2] }}</td>
+                <td data-label="Title">{{ row[3] }}</td>
+                <td data-label="Type">{{ row[4] }}</td>
+                <td data-label="Publisher">{{ row[5] }}</td>
+                <td data-label="Year">{{ row[7] }}</td>
+                <td data-label="DOI/Link">
+                    {% if row[8] %}
+                        <a href="{{ row[8] }}" target="_blank">Link</a>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td data-label="Submitted On">{{ row[9] if row[9] else 'N/A' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

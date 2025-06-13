@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign Up</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('https://toppng.com/uploads/preview/textured-backgrounds-for-websites-11553984842hbvetqjkg8.jpg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #541f1f;
+}
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            background: transparent;
+            border-radius: 12px;
+            padding: 40px 30px;
+            width: 400px;
+            box-shadow: none;
+            text-align: center;
+            animation: fadeInUp 1.2s cubic-bezier(.23,1.01,.32,1) both;
+        }
+
+        h2 {
+            color: #2575fc;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 28px;
+        }
+
+        p.info-text {
+            color: rgb(77, 205, 255);
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        form input[type="text"],
+        form input[type="password"],
+        form select {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 12px 0;
+            border: 2px solid #000000;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        form input[type="text"]:focus,
+        form input[type="password"]:focus,
+        form select:focus {
+            border-color: #2575fc;
+            box-shadow: 0 0 8px 2px #2575fc66;
+            outline: none;
+        }
+
+        button {
+            background: #2575fc;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: rgb(73, 73, 73);
+            transform: scale(1.04);
+        }
+
+        /* Ripple effect */
+        button .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            background-color: rgba(255,255,255,0.7);
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        p.back-link {
+            margin-top: 25px;
+            font-size: 14px;
+        }
+
+        p.back-link a {
+            color: rgb(244, 245, 248);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        p.back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin: 5px 0;
+            background-color: #ffe6e6;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ff4d4d;
+            animation: slideIn 0.6s cubic-bezier(.23,1.01,.32,1);
+        }
+
+        .success-message {
+            color: #28a745;
+            font-size: 14px;
+            margin: 5px 0;
+            background-color: #e6ffe6;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #28a745;
+            animation: slideIn 0.6s cubic-bezier(.23,1.01,.32,1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header style="
+        position: absolute;
+        top: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        text-align: center;
+        padding: 15px 0;
+        font-size: 24px;
+        font-weight: bold;
+        z-index: 1000;">
+        Faculty of Science
+    </header>
+
+    <div class="container">
+        <h2>Create Account</h2>
+        <p class="info-text">Create a new account for your use</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="{{ 'success-message' if category == 'success' else 'error-message' }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+        {% if success %}
+            <p class="success-message">{{ success }}</p>
+        {% endif %}
+        <form id="signupForm" method="POST" action="/signup_submit">
+            <input type="text" name="username" placeholder="Username" value="{{ username|default('') }}" required />
+            <input type="password" name="password" placeholder="Choose Password" required />
+            <select name="user_type" required>
+                <option value="" disabled {% if not user_type %}selected{% endif %}>Select Role</option>
+                <option value="Faculty" {% if user_type == 'Faculty' %}selected{% endif %}>Faculty</option>
+                <option value="Student" {% if user_type == 'Student' %}selected{% endif %}>Student</option>
+            </select>
+            <button type="submit">Create Account</button>
+        </form>
+        <p class="back-link"><a href="/login_page">← Back to Login</a></p>
+    </div> 
+
+    <script>
+        // Form validation
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            if (!this.checkValidity()) {
+                e.preventDefault();
+                alert("Please fill the form correctly!");
+            }
+        });
+
+        // Ripple effect for button
+        document.querySelector('button[type="submit"]').addEventListener('click', function(e) {
+            const btn = this;
+            // Remove any existing ripple
+            const oldRipple = btn.querySelector('.ripple');
+            if (oldRipple) oldRipple.remove();
+
+            const circle = document.createElement('span');
+            circle.classList.add('ripple');
+            const rect = btn.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            circle.style.width = circle.style.height = size + 'px';
+            circle.style.left = (e.clientX - rect.left - size/2) + 'px';
+            circle.style.top = (e.clientY - rect.top - size/2) + 'px';
+            btn.appendChild(circle);
+            setTimeout(() => circle.remove(), 600);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login - Faculty Publication Tracker</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-image: url('https://static.vecteezy.com/system/resources/previews/011/351/207/non_2x/abstract-technology-futuristic-glowing-blue-and-purple-light-lines-with-speed-motion-effect-on-dark-blue-background-free-vector.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Subtle overlay for depth - now more transparent */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3); /* Changed from 0.6 to 0.3 */
+            z-index: 0;
+        }
+        .login-container {
+            position: relative;
+            z-index: 2;
+            background: rgba(20, 20, 20, 0.4); /* Changed from 0.7 to 0.4 */
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+            /* Animated glowing border */
+            border: 3px solid transparent;
+            animation: glow 3s linear infinite;
+            /* Fade-in animation */
+            opacity: 0;
+            animation: fadeIn 1.2s ease-in forwards, glow 3s linear infinite;
+            /* Glass effect */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px #007bff, 0 0 20px #007bff, 0 0 30px #007bff; border-color: #007bff;}
+            50% { box-shadow: 0 0 30px #0ef, 0 0 60px #0ef, 0 0 90px #0ef; border-color: #0ef;}
+            100% { box-shadow: 0 0 10px #007bff, 0 0 20px #007bff, 0 0 30px #007bff; border-color: #007bff;}
+        }
+        .login-container h2 {
+            margin-bottom: 10px;
+            font-size: 28px;
+            color: #fff;
+            letter-spacing: 1px;
+            animation: popIn 1s cubic-bezier(.68,-0.55,.27,1.55) 0.5s both;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .message, .error {
+            font-weight: bold;
+            font-size: 14px;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            animation: fadeIn 1s ease-in;
+            backdrop-filter: blur(5px);
+        }
+        .message {
+            color: #28a745;
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+        .error {
+            color: #ff4d4d;
+            background: rgba(255, 77, 77, 0.2);
+            border: 1px solid rgba(255, 77, 77, 0.3);
+        }
+        form {
+            margin-top: 20px;
+        }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        input {
+            background: rgba(255, 255, 255, 0.8);
+            transition: box-shadow 0.3s, border-color 0.3s;
+            outline: none;
+        }
+        input:focus {
+            box-shadow: 0 0 8px #45f3ff, 0 0 16px #0ef;
+            border: 2px solid #0ef;
+            background: #fff;
+        }
+        button {
+            background-color: rgba(0, 123, 255, 0.8); /* Added transparency */
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        button:hover {
+            background-color: rgba(0, 86, 179, 0.9); /* Added transparency */
+            animation: pulse 0.7s infinite alternate;
+            box-shadow: 0 0 20px #0ef, 0 0 40px #0ef;
+        }
+        @keyframes pulse {
+            to {
+                transform: scale(1.04);
+                box-shadow: 0 0 24px #0ef, 0 0 40px #0ef;
+            }
+        }
+        .signup-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .signup-link a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+            color: #fff176;
+        }
+        header {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* Changed from 0.5 to 0.3 */
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 1000;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Faculty of Science
+    </header>
+    <div class="login-container">
+        <h2>🔐 Admin Login</h2>
+        <p>Login as Admin to access admin features</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="{{ 'message' if category == 'success' else 'error' }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="/adminlogin1" method="POST">
+            <input type="text" name="username" placeholder="👤 Username" required>
+            <input type="password" name="password" placeholder="🔑 Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            if (!this.checkValidity()) {
+                e.preventDefault();
+                alert("Please fill the form correctly!");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Publication</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://wallpaperaccess.com/full/3258583.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        } 
+    .form-container {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 500px;
+    animation: slideUp 0.8s ease-out;
+}
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        form {
+            display: grid;
+            gap: 15px;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            border-color: #2196f3;
+            box-shadow: 0 0 5px rgba(33,150,243,0.4);
+            outline: none;
+        }
+
+        button {
+            padding: 12px;
+            background: #2196f3;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background:rgb(135, 135, 135);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Edit Publication</h2>
+        <form method="POST" action="/update/{{ record[0] }}">
+            <input type="text" name="faculty" value="{{ record[1] }}" required>
+            <input type="text" name="department" value="{{ record[2] }}" required>
+            <input type="text" name="title" value="{{ record[3] }}" required>
+            <input type="text" name="type" value="{{ record[4] }}" required>
+            <input type="text" name="publisher" value="{{ record[5] }}" required>
+            <input type="email" name="publisher_email" value="{{ record[6] }}" required>
+            <input type="text" name="year" value="{{ record[7] }}" required>
+            <input type="text" name="link" value="{{ record[8] }}">
+            <button type="submit">Update</button>
+        </form>
+    </div>
+</body>
+</html>
+

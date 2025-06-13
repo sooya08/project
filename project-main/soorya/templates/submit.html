@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit Publication</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://t3.ftcdn.net/jpg/01/99/95/20/360_F_199952085_XizWdeS3JGh86oFI5zcgb1960tvXUJ3s.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      color: white;
+    }
+
+    header {
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .form-container {
+      background: rgba(0, 0, 0, 0.65);
+      border-radius: 16px;
+      padding: 40px;
+      margin-top: 60px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      max-width: 500px;
+      width: 100%;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      color: #f8f9fa;
+      margin-bottom: 25px;
+    }
+
+    form input,
+    form select,
+    form button {
+      width: 100%;
+      padding: 14px 16px;
+      margin: 10px 0;
+      font-size: 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(155, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    form input::placeholder,
+    form select {
+      color: #ddd;
+      font-weight: bold;
+    }
+
+    form input:focus,
+    form select:focus {
+      outline: none;
+      border-color: #00ffe5;
+      box-shadow: 0 0 10px #00ffe5, 0 0 20px #00ffe5 inset;
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    /* NEW HOVER EFFECTS (glow on hover) */
+    form input:hover,
+    form select:hover {
+      box-shadow: 0 0 8px #00ffe5;
+      border-color: #00ffe5;
+    }
+
+    form button {
+      background-color: #28a745;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s;
+    }
+
+    form button:hover {
+      background-color: #218838;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #28a745;
+    }
+
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 20px;
+        margin: 40px 10px;
+      }
+    }
+
+    form select {
+      color: #ddd;
+      font-weight: bold;
+    }
+
+    form select option {
+      background-color: #1a1a1a;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    Faculty of Science
+  </header>
+
+  <div class="form-container">
+    <h1>📄 Submit Publication</h1>
+    <form method="POST" action="/submit">
+      <input type="text" name="faculty_name" placeholder="👨‍🏫 Faculty Name" required>
+      <input type="text" name="department" placeholder="🏢 Department" required>
+      <input type="text" name="title" placeholder="📝 Title of Publication" required>
+
+      <select name="pub_type" required>
+        <option value="">📚 Select Publication Type</option>
+        <option value="Journal">Journal</option>
+        <option value="Conference">Conference</option>
+        <option value="Book">Book</option>
+      </select>
+
+      <input type="text" name="publisher" placeholder="🏛 Publisher Name" required>
+      <input type="email" name="publisher_email" placeholder="✉️ Publisher Email ID" required>
+      <input type="text" name="publication_year" placeholder="📅 Publication Year (e.g., 2024)" required>
+      <input type="url" name="doi_or_link" placeholder="🔗 DOI or Online Link (optional)">
+
+      <button type="submit">✅ Submit</button>
+    </form>
+  </div>
+
+</body>
+</html>

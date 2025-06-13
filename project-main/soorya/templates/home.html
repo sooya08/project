@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Faculty Publication Tracker</title>
+    <style>
+      body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: url("https://wallpaperaccess.com/full/4869058.jpg") no-repeat center center fixed;
+    background-color: #000; /* Fallback if image fails */
+    background-size: cover;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 26px;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .nav-links {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            padding: 15px 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #ffeb3b, #ff4081, #00e5ff, #76ff03);
+            background-size: 300% 300%;
+            color: #000;
+            animation: glowing 5s ease infinite;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .nav-links a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px #fff;
+        }
+
+        @keyframes glowing {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            max-width: 700px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            color: #28a745;
+            background: #e6ffe6;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .error {
+            color: #ff4d4d;
+            background: #ffe6e6;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        Faculty of Science
+        <div class="nav-links">
+            {% if user_type == 'Faculty' %}
+                <a href="/submitpublication">Submit Publication</a>
+                <a href="/adminlogin">Admin Panel</a>
+            {% endif %}
+            <a href="/view_publications">View Publications</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Welcome, {{ user }} ({{ user_type }})!</h1>
+        <p style="margin-top: 20px; font-size: 18px; line-height: 1.6;">
+    The <strong>Faculty of Science</strong> stands as a beacon of academic excellence and innovation. With a distinguished team of scholars and researchers, our faculty consistently pushes the boundaries of knowledge and discovery. We are proud to be recognized not just for outstanding teaching, but also for groundbreaking research that shapes the future. Our students are guided by passionate mentors who inspire, challenge, and support them to reach their highest potential. Truly, our faculty is one of the best in the field of science and education.
+</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="{{ 'message' if category == 'success' else 'error' }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+</body>
+</html>
